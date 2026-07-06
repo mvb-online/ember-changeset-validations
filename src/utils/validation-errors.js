@@ -21,6 +21,10 @@ export default function buildMessage(key, result) {
 
   let { type, value, context = {} } = result;
 
+  if (context?.description) {
+    description = context.description;
+  }
+
   let message = get(messages, type);
   if (returnsRaw) {
     context = Object.assign({}, context, { description });
