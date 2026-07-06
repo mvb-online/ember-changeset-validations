@@ -49,5 +49,31 @@ module('Unit | Utility | validation errors', function () {
       assert.strictEqual(type, 'date', 'the type of the error is returned');
       assert.strictEqual(value, d, 'the passed value is returned');
     });
+
+    test('#buildMessage can return a provided description in raw data structure', function (assert) {
+      let result = buildMessage('firstName', {
+        type: 'present',
+        value: 'testValue',
+        context: { foo: 'foo', description: 'Name' },
+      });
+
+      assert.notStrictEqual(
+        typeof result,
+        'string',
+        'the return value is an object',
+      );
+
+      let {
+        message,
+        type,
+        value,
+        context: { description },
+      } = result;
+
+      assert.ok(message, "{description} can't be blank");
+      assert.strictEqual(description, 'Name', 'description is returned');
+      assert.strictEqual(type, 'present', 'the type of the error is returned');
+      assert.strictEqual(value, 'testValue', 'the passed value is returned');
+    });
   });
 });
